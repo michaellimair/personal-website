@@ -1,12 +1,24 @@
 module.exports = {
   mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      pseudo: { // defaults to {'before': 'before', 'after': 'after'}
+        'before': 'before',
+        'after': 'after',
+      }  
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['before', 'after'],
+      borderColor: ['before', 'after'],
+    }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-pseudo')({
+      empty: true, // defaults to true
+    }),
+  ],
 }
