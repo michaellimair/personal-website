@@ -3,9 +3,13 @@ import {
 } from 'react';
 import { Disclosure } from '@headlessui/react';
 import {
-  MenuIcon, XIcon, MoonIcon, SunIcon,
+  MenuIcon,
+  XIcon,
+  MoonIcon,
+  SunIcon,
 } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import NoSSR from './NoSSR';
 
 interface NavigationItem {
   name: string;
@@ -30,9 +34,19 @@ const useNavigationItems = (): NavigationItem[] => {
 
 const classNames = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
+const getInitialColorScheme = (): string => {
+  if (typeof window === 'undefined') {
+    return 'dark';
+  }
+  const storedColorScheme = localStorage.getItem('colorScheme');
+  const preferredColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  return storedColorScheme ?? preferredColorScheme;
+};
+
 const Navigation: FC = () => {
   const navigation = useNavigationItems();
-  const [darkMode, setDarkMode] = useState<boolean>(((typeof window !== 'undefined' && localStorage.getItem('theme')) ?? 'dark') === 'dark');
+  const [darkMode, setDarkMode] = useState<boolean>(getInitialColorScheme() === 'dark');
 
   useEffect(() => {
     if (darkMode) {
@@ -105,14 +119,17 @@ const Navigation: FC = () => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button type="button" onClick={darkMode ? switchToLightMode : switchToDarkMode} className="p-1 rounded-full text-gray-800 dark:text-white focus:outline-none hover:opacity-70">
-                  <span className="sr-only">View notifications</span>
+                <NoSSR>
                   {darkMode ? (
-                    <SunIcon className="h-6 w-6" aria-hidden="true" />
+                    <button type="button" onClick={switchToLightMode} className="p-1 rounded-full text-gray-800 dark:text-white focus:outline-none hover:opacity-70">
+                      <SunIcon className="h-6 w-6" />
+                    </button>
                   ) : (
-                    <MoonIcon className="h-6 w-6" aria-hidden="true" />
+                    <button type="button" onClick={switchToDarkMode} className="p-1 rounded-full text-gray-800 dark:text-white focus:outline-none hover:opacity-70">
+                      <MoonIcon className="h-6 w-6" />
+                    </button>
                   )}
-                </button>
+                </NoSSR>
               </div>
             </div>
           </div>

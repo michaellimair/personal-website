@@ -2,16 +2,15 @@ import type { Experience } from 'types/Experience';
 
 const useWorkExperience = (): Experience[] => [
   {
-    companyName: 'SOCIF',
-    logoLink: '/socif.jpeg',
+    companyName: 'Bivi',
+    logoLink: '/bivi.svg',
     positions: [
       {
-        position: 'Full-Stack Engineer',
-        startTime: new Date('2019-05-01'),
-        endTime: new Date('2019-12-01'),
+        position: 'CTO',
+        startTime: new Date('2020-04-01'),
       },
     ],
-    website: 'https://socif.co',
+    website: 'https://bivi.us',
   },
   {
     companyName: 'EventX',
@@ -37,15 +36,16 @@ const useWorkExperience = (): Experience[] => [
     website: 'https://holywings.com',
   },
   {
-    companyName: 'Bivi',
-    logoLink: '/bivi.svg',
+    companyName: 'SOCIF',
+    logoLink: '/socif.jpeg',
     positions: [
       {
-        position: 'CTO',
-        startTime: new Date('2020-04-01'),
+        position: 'Full-Stack Engineer',
+        startTime: new Date('2019-05-01'),
+        endTime: new Date('2019-12-01'),
       },
     ],
-    website: 'https://bivi.us',
+    website: 'https://socif.co',
   },
 ];
 
